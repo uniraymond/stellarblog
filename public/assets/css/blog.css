@@ -1,0 +1,11 @@
+body {
+    font-family: 'Lato';
+}
+
+.fa-btn {
+    margin-right: 6px;
+}
+
+#published_at {
+    background: url('/assets/images/calendar-icon-tiny.png') 99% 3px no-repeat transparent;
+}
