@@ -33,7 +33,7 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <img src="{{ url('/assets/images/logo.jpeg') }}" alt="Stella Systems" id="logo", class="logo" />
+                    <img src="{{ url('/assets/images/stellar-home.png') }}" alt="Stella Systems" id="logo", class="logo" />
                 </a>
             </div>
 

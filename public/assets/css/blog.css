@@ -7,7 +7,21 @@ body {
 }
 
 .navbar-default {
-    background-color: transparent;
+    background-color: #00B7E1;
+    filter: alpha(opacity=60);
+    /* IE */
+    -moz-opacity: 0.6;
+    /* Mozilla */
+    opacity: 0.6;
+    /* CSS3 */
+}
+
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover {
+    color: #000;
+}
+
+.navbar-default .navbar-nav>li>a {
+    color: #000;
 }
 
 .navbar-brand {
