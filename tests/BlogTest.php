@@ -59,6 +59,8 @@ class BlogTest extends TestCase
 
     public function testDatabase()
     {
-        $this->seeInDatabase('blogs', ['title' => '11 Titile ZAVDh']);
+//        $this->seeInDatabase('blogs', ['title' => '11 Titile ZAVDh']);
+        $blog = factory(App\Blog::class)->make();
+        $blog = factory(App\Blog::class)->create();
     }
 }

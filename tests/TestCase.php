@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
 {
-    use DatabaseMigrations;
+//    use DatabaseMigrations;
     /**
      * The base URL to use while testing the application.
      *
