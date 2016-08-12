@@ -26,7 +26,7 @@
                         <tr>
                             <td><a href="{{ url('blog/'.$blog->id) }}">{{ $blog->title }}</a></td>
                             <td>{{ $blog->body }}</td>
-                            <td>{{ $blog->published_at }}</td>
+                            <td>{{ $blog->published_at }} - {{strtotime($blog->deleted_at)}}</td>
                             <td>{{ $blog->users->name }}</td>
                         </tr>
                     @endforeach

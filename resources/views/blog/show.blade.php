@@ -26,6 +26,11 @@
                 {!! Form::submit('Delete', ['class'=>'btn btn-default']) !!}
                 {!! Form::token() !!}
                 {!! Form::close() !!}
+
+                {!! Form::open(array('url' => 'blog/'.$blog->id.'/remove', 'class'=>'form', 'method'=> 'DELETE', 'onsubmit'=>'return confirm("Are you sure to delete this blog?")' )) !!}
+                {!! Form::submit('Remove', ['class'=>'btn btn-default']) !!}
+                {!! Form::token() !!}
+                {!! Form::close() !!}
             </div>
             <div class="col-lg-2 col-md-2">
                 {{ link_to('blog/'.$blog->id.'/edit', 'Edit', ['class'=>'btn btn-default']) }}

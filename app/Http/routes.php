@@ -27,6 +27,7 @@ Route::group(['middleware' => 'auth'], function() {
 //    Route::patch('blog', 'BlogController@update');
 //    Route::delete('blog/{blog}', 'BlogController@destroy')->name('blog.delete');
     Route::resource('blog', 'BlogController');
+    Route::delete('blog/{blog}/remove', 'BlogController@markdeleteblog');
 });
 
 Route::get('blog', 'BlogController@index');

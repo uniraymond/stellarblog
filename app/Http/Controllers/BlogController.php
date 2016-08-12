@@ -18,8 +18,13 @@ class BlogController extends Controller
      */
     public function index()
     {
-//        $blogs = Blog::all();
-        $blogs = Blog::where('published_at','<=',date('now'))->where('active', 1)->paginate(5);
+        $blogs = Blog::where('published_at','<=',date('now'))
+            ->where('active', 1)
+
+            // not sure wheater need to add the deleted_at condition
+//            ->where('deleted_at','=', '0000-00-00 00:00:00' )
+            
+            ->paginate(5);
 
         return view('blog/index', ['blogs'=>$blogs]);
     }
@@ -137,7 +142,7 @@ class BlogController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  Request $request, int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request, $id)
@@ -156,4 +161,30 @@ class BlogController extends Controller
         $request->session()->flash('status', 'Blog: '. $title .' has been deleted.');
         return redirect('blog');
     }
+
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  Request $request, int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function markdeleteblog(Request $request, $id)
+    {
+        $authuser = $request->user();
+
+        $blog = Blog::find($id);
+
+        if ($authuser->id != $blog->user_id) {
+            $request->session()->flash('warning', 'You do not have authority to delete this blog.');
+            return redirect('blog/'.$id);
+        }
+        $title = $blog->title;
+        $blog->deleted_at = date("Y-m-d H:i:s");
+        $blog->save();
+
+        $request->session()->flash('status', 'Blog: '. $title .' has been marked as deleted.');
+        return redirect('blog');
+    }
+
 }
