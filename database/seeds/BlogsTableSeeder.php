@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class BlogTableSeeder extends Seeder
+class BlogsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,7 +12,7 @@ class BlogTableSeeder extends Seeder
     public function run()
     {
         for($i=1; $i<= 11; $i++) {
-            DB::table('blog')->insert([
+            DB::table('blogs')->insert([
                 'title' => $i .' Titile ' . str_random(5),
                 'body' => '<h1>The ' . $i .' Blog</h1> <br /><br /><p>The Laravel framework has a few system requirements.
                  Of course, all of these requirements are satisfied by the Laravel Homestead virtual machine, 

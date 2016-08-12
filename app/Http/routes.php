@@ -18,3 +18,16 @@ Route::get('/', function () {
 Route::auth();
 
 Route::get('/home', 'HomeController@index');
+
+Route::group(['middleware' => 'auth'], function() {
+//    Route::get('blog/create',  'BlogController@create')->name('blog.create');
+//    Route::get('blog/{blog}/edit',  'BlogController@edit')->name('blog.edit');
+//    Route::post('blog', 'BlogController@store')->name('blog.new');
+//    Route::put('blog', 'BlogController@update')->name('blog.update');
+//    Route::patch('blog', 'BlogController@update');
+//    Route::delete('blog/{blog}', 'BlogController@destroy')->name('blog.delete');
+    Route::resource('blog', 'BlogController');
+});
+
+Route::get('blog', 'BlogController@index');
+Route::get('blog/{blog}', 'BlogController@show');
