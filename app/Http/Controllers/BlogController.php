@@ -19,7 +19,7 @@ class BlogController extends Controller
     public function index()
     {
 //        $blogs = Blog::all();
-        $blogs = Blog::paginate(5);
+        $blogs = Blog::where('published_at','<=',date('now'))->where('active', 1)->paginate(5);
 
         return view('blog/index', ['blogs'=>$blogs]);
     }
@@ -42,11 +42,18 @@ class BlogController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'title' => 'required|max:255',
+            'body'  => 'required',
+            'published_at' => 'required|date',
+
+        ]);
+
         $authuser = $request->user();
 
         $title = $request['title'];
         $body = trim($request['body']);
-        $publishedAt = date('Y-m-d H:i:s', strtotime($request['published_at']));
+        $publishedAt = date('Y-m-d H:i:s', strtotime($request['published_at'] ? $request['published_at'] : 'now'));
         $active = $request['active'] ? 1 : 0;
 
         $blog = new Blog();
@@ -97,6 +104,12 @@ class BlogController extends Controller
     public function update(Request $request, $id)
     {
         $authuser = $request->user();
+        $this->validate($request, [
+            'title' => 'required|max:255',
+            'body'  => 'required',
+            'published_at' => 'required|date',
+        ]);
+
 
         $title = $request['title'];
         $body = trim($request['body']);

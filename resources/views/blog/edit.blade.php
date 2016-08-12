@@ -7,16 +7,21 @@
                     <div class="panel-heading">
                         {{ isset($blog) ? 'Edit' : 'New' }} Article</div>
                     <div class="panel-body">
+                        @if (count($errors) > 0)
+                            @foreach ($errors->all() as $error)
+                                {{ $error }}
+                            @endforeach
+                        @endif
                         {!! Form::open( array('url' => isset($blog->id) ? 'blog/'.$blog->id : 'blog', 'class'=>'form', 'method'=> isset($blog) ? 'PUT' : 'POST' )) !!}
                             <div class="form-group col-md-6" >
                                 {!! Form::label('title', 'Title', ['class'=>'col-md-12']) !!}
-                                {!! Form::input('text', 'title', isset($blog) ? $blog->title : 'Title', ['class'=>'col-md-12 form-control', 'id'=>'title', 'placeholder'=>'Title']) !!}
+                                {!! Form::input('text', 'title', isset($blog) ? $blog->title : 'Title', ['class'=>'col-md-12 form-control', 'id'=>'title', 'placeholder'=>'Title', 'required']) !!}
 
                                 {!! Form::label('body', 'Body', ['class'=>'col-md-12']) !!}
-                                {!! Form::textarea('body', isset($blog) ? $blog->body : '', ['class'=>'col-md-12 form-control', 'id'=>'body', 'placeholder'=>'Body']) !!}
+                                {!! Form::textarea('body', isset($blog) ? $blog->body : '', ['class'=>'col-md-12 form-control', 'id'=>'body', 'placeholder'=>'Body', 'required']) !!}
 
                                 {!! Form::label('published_at', 'Publish on') !!}
-                                {!! Form::input('datetime', 'published_at', isset($blog->published_at) ? date('d-m-Y H:s', strtotime($blog->published_at)) : '', ['class' => 'form-control col-md-12', 'id'=>'published_at', 'placeholder' => 'published at']) !!}
+                                {!! Form::input('datetime', 'published_at', isset($blog->published_at) ? date('d-m-Y H:s', strtotime($blog->published_at)) : '', ['class' => 'form-control col-md-12', 'id'=>'published_at', 'placeholder' => 'published at', 'required']) !!}
 
                                 {!! Form::label('active', 'Active', ['class'=>'col-md-12']) !!}
                                 {!! Form::checkbox('active', isset($blog) && $blog->active ? 1 : 0, isset($blog) && $blog->active ? true : false, ['class'=>'col-md-12 form-control', 'id'=>'active']) !!}
