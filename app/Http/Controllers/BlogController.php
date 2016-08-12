@@ -55,12 +55,13 @@ class BlogController extends Controller
         $body = trim($request['body']);
         $publishedAt = date('Y-m-d H:i:s', strtotime($request['published_at'] ? $request['published_at'] : 'now'));
         $active = $request['active'] ? 1 : 0;
+        $userId = $authuser->id;
 
         $blog = new Blog();
         $blog->title = $title;
         $blog->body = $body;
         $blog->published_at = $publishedAt;
-        $blog->user_id = $authuser->id;
+        $blog->user_id = $userId;
         $blog->active = $active;
         $blog->save();
 
@@ -109,12 +110,18 @@ class BlogController extends Controller
             'body'  => 'required',
             'published_at' => 'required|date',
         ]);
-
-
+        
         $title = $request['title'];
         $body = trim($request['body']);
         $publishedAt = date('Y-m-d H:i:s', strtotime($request['published_at']));
         $active = $request['active'] ? 1 : 0;
+        $userId = $request['user_id'];
+        
+        if ($authuser->id != $userId) {
+            $request->session()->flash('warning', 'You do not have authority to edit this blog.');
+            return redirect('blog/'.$id.'/edit');
+        }
+        
         $blog = Blog::find($id);
         $blog->title = $title;
         $blog->body = $body;
@@ -135,7 +142,14 @@ class BlogController extends Controller
      */
     public function destroy(Request $request, $id)
     {
+        $authuser = $request->user();
+
         $blog = Blog::find($id);
+
+        if ($authuser->id != $blog->user_id) {
+            $request->session()->flash('warning', 'You do not have authority to delete this blog.');
+            return redirect('blog/'.$id);
+        }
         $title = $blog->title;
         $blog->delete();
 

@@ -7,6 +7,7 @@
             {{--<a class="col-md-offset-2 btn btn-default right" href="{{ url('admin/article/create') }}" target="_blank">New Article</a>--}}
             <div class="col-lg-9 col-md-11 col-sm-10" >
                 {{ $success = Session::get('status') }}
+                {{ $success = Session::get('warning') }}
             </div>
             <div class="blog">
                 <div class="title">

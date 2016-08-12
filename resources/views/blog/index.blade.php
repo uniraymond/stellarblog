@@ -4,6 +4,9 @@
 @section('content')
     <div class="container container-full" ng-app="articleApp">
         <div class="row" ng-controller="articleController">
+            <div>
+                <h1>Blogs</h1>
+            </div>
             {{--<a class="col-md-offset-2 btn btn-default right" href="{{ url('admin/article/create') }}" target="_blank">New Article</a>--}}
             <div class="col-lg-9 col-md-11 col-sm-10" >
                 {{ $success = Session::get('status') }}

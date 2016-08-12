@@ -5,13 +5,19 @@
             <div class="col-md-11 col-md-offset-1">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        {{ isset($blog) ? 'Edit' : 'New' }} Article</div>
+                        {{ isset($blog) ? 'Edit' : 'New' }} Blog</div>
+
+                    <div class="col-lg-9 col-md-11 col-sm-10" >
+                        {{ $success = Session::get('warning') }}
+                    </div>
+
                     <div class="panel-body">
-                        @if (count($errors) > 0)
+                        @if (isset($errors) && count($errors) > 0)
                             @foreach ($errors->all() as $error)
                                 {{ $error }}
                             @endforeach
                         @endif
+
                         {!! Form::open( array('url' => isset($blog->id) ? 'blog/'.$blog->id : 'blog', 'class'=>'form', 'method'=> isset($blog) ? 'PUT' : 'POST' )) !!}
                             <div class="form-group col-md-6" >
                                 {!! Form::label('title', 'Title', ['class'=>'col-md-12']) !!}
@@ -25,6 +31,7 @@
 
                                 {!! Form::label('active', 'Active', ['class'=>'col-md-12']) !!}
                                 {!! Form::checkbox('active', isset($blog) && $blog->active ? 1 : 0, isset($blog) && $blog->active ? true : false, ['class'=>'col-md-12 form-control', 'id'=>'active']) !!}
+                                {!! Form::input('text', 'user_id', isset($blog->user_id) ? $blog->user_id : '', ['hidden', 'readonly'] ) !!}
                             </div>
 
                             {!! Form::token() !!}
