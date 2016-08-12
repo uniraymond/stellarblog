@@ -18,6 +18,7 @@ class BlogsTableSeeder extends Seeder
                  Of course, all of these requirements are satisfied by the Laravel Homestead virtual machine, 
                  so it\'s highly recommended that you use Homestead as your local Laravel development environment.
                  However, if you are not using Homestead, you will need to make sure your server meets the following requirements:',
+                'published_at' => date('Y-m-d H:i:s'),
                 'active' => 1,
                 'user_id' => 1
             ]);

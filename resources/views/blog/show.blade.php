@@ -2,42 +2,49 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container container-full" ng-app="articleApp">
-        <div class="row" ng-controller="articleController">
-            {{--<a class="col-md-offset-2 btn btn-default right" href="{{ url('admin/article/create') }}" target="_blank">New Article</a>--}}
-            <div class="col-lg-9 col-md-11 col-sm-10" >
-                {{ $success = Session::get('status') }}
-                {{ $success = Session::get('warning') }}
+    <div class="container container-full" ng-app="blogApp">
+        <div class="row" ng-controller="blogController">
+            <div class="col-lg-12 col-md-12 col-sm-12 bs-example-bg-classes" >
+                @if ( $success = Session::get('status') )
+                    <p class="bg-info">
+                        {{ $success }}
+                    </p>
+                @elseif( $failed = Session::get('warning') )
+                    <p class="bg-danger">
+                        {{ $failed }}
+                    </p>
+                @endif
+
             </div>
-            <div class="blog">
+            <div class="blog col-lg-12 col-md-12 col-sm-12">
                 <div class="title">
-                    <h2>{{ $blog->title }}</h2><br />
-                    <small>Published at: {{ date('d M, Y H:s', strtotime($blog->published_at)) }}</small>
+                    <h1>{{ $blog->title }}</h1>
+                    <div class="sub-date-auth col-lg-12 col-md-12 col-sm-12">
+                            Posted by <span class="sub-auth">{{ $blog->users->name }}</span> on {{ date('d F, Y H:s', strtotime($blog->published_at)) }}
+                    </div>
                 </div>
-                <div class="body">
+                <div class="body col-lg-12 col-md-12 col-sm-12">
                     {{ $blog->body }}
                 </div>
-                <div>
-                    Author: {{ $blog->users->name }}
-                </div>
-            </div>
-            <div class="col-lg-9 col-md-9">
-                {!! Form::open(array('url' => 'blog/'.$blog->id, 'class'=>'form', 'method'=> 'DELETE', 'onsubmit'=>'return confirm("Are you sure to delete this blog?")' )) !!}
-                {!! Form::submit('Delete', ['class'=>'btn btn-default']) !!}
-                {!! Form::token() !!}
-                {!! Form::close() !!}
-
-                {!! Form::open(array('url' => 'blog/'.$blog->id.'/remove', 'class'=>'form', 'method'=> 'DELETE', 'onsubmit'=>'return confirm("Are you sure to delete this blog?")' )) !!}
-                {!! Form::submit('Remove', ['class'=>'btn btn-default']) !!}
-                {!! Form::token() !!}
-                {!! Form::close() !!}
-            </div>
-            <div class="col-lg-2 col-md-2">
-                {{ link_to('blog/'.$blog->id.'/edit', 'Edit', ['class'=>'btn btn-default']) }}
-                <a href="{{ url('blog') }}">Return</a>
             </div>
         </div>
-        <div>
+        <div class="row">
+            <div class="col-lg-1 col-md-1 col-sm-3">
+                {!! Form::open(array('url' => 'blog/'.$blog->id, 'class'=>'form', 'method'=> 'DELETE', 'onsubmit'=>'return confirm("Are you sure to delete this blog?")' )) !!}
+                {!! Form::submit('Delete', ['class'=>'btn btn-warning']) !!}
+                {!! Form::token() !!}
+                {!! Form::close() !!}
+            </div>
+            <div class="col-lg-1 col-md-1 col-sm-3">
+                {!! Form::open(array('url' => 'blog/'.$blog->id.'/remove', 'class'=>'form', 'method'=> 'DELETE', 'onsubmit'=>'return confirm("Are you sure to delete this blog?")' )) !!}
+                {!! Form::submit('Remove', ['class'=>'btn btn-warning']) !!}
+                {!! Form::token() !!}
+                {!! Form::close() !!}
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2 pull-right">
+                {{ link_to('blog/'.$blog->id.'/edit', 'Edit', ['class'=>'btn btn-default']) }}
+                {{ link_to('blog', 'Return') }}
+            </div>
         </div>
     </div>
 @endsection

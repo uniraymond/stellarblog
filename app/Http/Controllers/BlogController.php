@@ -14,22 +14,35 @@ class BlogController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request for user profiles and wheathe logined
+     *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $blogs = Blog::where('published_at','<=',date('now'))
-            ->where('active', 1)
+        $authuser = $request->user();
+
+        //if it is admin the marked as delete and unactive blog can be view
+        if ($authuser) {
+            $blogs = Blog::where('published_at','<=',date('now'))
 
             // not sure wheater need to add the deleted_at condition
 //            ->where('deleted_at','=', '0000-00-00 00:00:00' )
             
             ->paginate(5);
+        } else {
+            $blogs = Blog::where('published_at','<=',date('now'))
+                ->where('active', 1)
+                ->where('deleted_at','=', '0000-00-00 00:00:00' )
+                ->paginate(5);
+        }
 
-        return view('blog/index', ['blogs'=>$blogs]);
+        return view('blog/index', ['blogs'=>count($blogs)>0 ? $blogs : '']);
     }
 
     /**
+     * create and edit view are using same blade file.
+     * 
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response

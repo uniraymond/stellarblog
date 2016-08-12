@@ -33,7 +33,7 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    Laravel
+                    <img src="{{ url('/assets/images/logo.jpeg') }}" alt="Stella Systems" id="logo", class="logo" />
                 </a>
             </div>
 
